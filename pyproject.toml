@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "weightwright"
+version = "0.1.0"
+description = "Inspect, edit, patch and roll back LLM weights from one command, with an evaluation gate."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+authors = [{ name = "G. Vivek" }]
+dependencies = [
+  "torch>=2.1",
+  "safetensors>=0.4",
+  "pyyaml>=6.0",
+  "numpy>=1.24",
+]
+
+[project.optional-dependencies]
+hf = ["transformers>=4.45", "accelerate>=0.30"]
+dev = ["pytest>=7"]
+
+[project.scripts]
+wright = "weightwright.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["weightwright*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

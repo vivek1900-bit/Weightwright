@@ -1,0 +1,8 @@
+# One JSON object per line. tag: target | regression. Check types:
+# contains, regex, exact, last_number, no_loop, finished, json_valid, or {"all": [..]}
+{"prompt": "What is 17 + 25? Answer briefly.", "tag": "target", "check": {"all": [{"type": "finished"}, {"type": "no_loop"}, {"type": "last_number", "value": 42}]}}
+{"prompt": "What is 9 * 8? Answer briefly.", "tag": "target", "check": {"all": [{"type": "finished"}, {"type": "no_loop"}, {"type": "last_number", "value": 72}]}}
+{"prompt": "What is 100 - 37? Answer briefly.", "tag": "target", "check": {"all": [{"type": "finished"}, {"type": "no_loop"}, {"type": "last_number", "value": 63}]}}
+{"prompt": "What is the capital of France? One word.", "tag": "regression", "check": {"type": "contains", "value": "paris"}}
+{"prompt": "Reply with valid JSON only: an object with key \"ok\" set to true.", "tag": "regression", "check": {"type": "json_valid"}}
+{"prompt": "Name the chemical symbol for water's two elements, hydrogen and oxygen.", "tag": "regression", "check": {"type": "contains", "any": ["h", "o"]}}
