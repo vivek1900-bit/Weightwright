@@ -1,0 +1,44 @@
+{"prompt": "Answer yes or no only: Is the sun a star?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Answer yes or no only: Is water wet?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Answer yes or no only: Is Paris in France?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Answer yes or no only: Is 7 an even number?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Answer yes or no only: Is a spider an insect?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Answer yes or no only: Is the moon a planet?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Answer yes or no only: Can birds fly?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Answer yes or no only: Is ice colder than steam?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Answer yes or no only: Is Tokyo the capital of Japan?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Answer yes or no only: Is gold a metal?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Answer yes or no only: Does the Earth orbit the sun?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Answer yes or no only: Is a tomato a vegetable?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Answer yes or no only: Is 10 greater than 5?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Answer yes or no only: Is Australia a continent?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Answer yes or no only: Do fish breathe with gills?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Answer yes or no only: Is the Pacific the largest ocean?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Answer yes or no only: Is salt sweet?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Answer yes or no only: Is Mars the closest planet to the sun?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Answer yes or no only: Is a triangle a four-sided shape?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Answer yes or no only: Do cats bark?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Answer yes or no only: Is Everest the tallest mountain on Earth?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Answer yes or no only: Is oxygen a gas?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Answer yes or no only: Is 15 a prime number?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Answer yes or no only: Is the Nile a river?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "What is the capital of France? One word.", "tag": "regression", "check": {"type": "contains", "value": "paris"}}
+{"prompt": "Name the largest planet in our solar system.", "tag": "regression", "check": {"type": "contains", "value": "jupiter"}}
+{"prompt": "Who wrote Romeo and Juliet?", "tag": "regression", "check": {"type": "contains", "value": "shakespeare"}}
+{"prompt": "What gas do plants absorb from the air? Answer briefly.", "tag": "regression", "check": {"type": "contains", "value": "carbon"}}
+{"prompt": "What is the chemical formula for water?", "tag": "regression", "check": {"type": "contains", "any": ["h2o", "h\u2082o"]}}
+{"prompt": "Which ocean is the largest?", "tag": "regression", "check": {"type": "contains", "value": "pacific"}}
+{"prompt": "Who painted the Mona Lisa?", "tag": "regression", "check": {"type": "contains", "value": "vinci"}}
+{"prompt": "At what temperature in Celsius does water boil at sea level?", "tag": "regression", "check": {"type": "contains", "value": "100"}}
+{"prompt": "Translate 'good morning' into Spanish.", "tag": "regression", "check": {"type": "contains", "value": "buenos"}}
+{"prompt": "Write the word banana five times, separated by spaces.", "tag": "regression", "check": {"type": "contains", "value": "banana"}}
+{"prompt": "What is 2 + 2? Answer briefly.", "tag": "regression", "check": {"type": "last_number", "value": 4}}
+{"prompt": "What is 6 times 7? Answer briefly.", "tag": "regression", "check": {"type": "last_number", "value": 42}}
+{"prompt": "What is 20 divided by 4? Answer briefly.", "tag": "regression", "check": {"type": "last_number", "value": 5}}
+{"prompt": "Explain in three sentences why the sky is blue.", "tag": "regression", "check": {"all": [{"type": "no_loop"}, {"type": "regex", "pattern": "(?s)^.{120,}$"}]}}
+{"prompt": "Describe how photosynthesis works in a short paragraph.", "tag": "regression", "check": {"all": [{"type": "no_loop"}, {"type": "regex", "pattern": "(?s)^.{120,}$"}]}}
+{"prompt": "Explain what a noun is and give two examples.", "tag": "regression", "check": {"all": [{"type": "no_loop"}, {"type": "regex", "pattern": "(?s)^.{120,}$"}]}}
+{"prompt": "Write a short paragraph about the ocean.", "tag": "regression", "check": {"all": [{"type": "no_loop"}, {"type": "regex", "pattern": "(?s)^.{120,}$"}]}}
+{"prompt": "Explain why we have seasons.", "tag": "regression", "check": {"all": [{"type": "no_loop"}, {"type": "regex", "pattern": "(?s)^.{120,}$"}]}}
+{"prompt": "Describe what a computer does in two or three sentences.", "tag": "regression", "check": {"all": [{"type": "no_loop"}, {"type": "regex", "pattern": "(?s)^.{120,}$"}]}}
+{"prompt": "List the numbers from 1 to 10 separated by commas.", "tag": "regression", "check": {"all": [{"type": "finished"}, {"type": "contains", "value": "10"}]}}

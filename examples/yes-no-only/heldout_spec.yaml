@@ -1,0 +1,31 @@
+# HELD-OUT set: use only with `wright eval`, never with `wright run`. Example: make a small model answer "yes or no only" prompts with just yes or no.
+# Run from the repository root. Needs the model folder at ./models/small-model.
+name: yes-no-heldout
+model:
+  path: ./models/small-model
+  dtype: bfloat16
+  device: auto
+goal: |
+  When a prompt says to answer yes or no only, the model adds a long explanation after its answer.
+  Make it answer with just yes or no, without making it terse on other questions.
+eval:
+  file: ./examples/yes-no-only/heldout.jsonl
+  backend: hf
+  max_new_tokens: 300
+  chat: true
+  target_tag: target
+  regression_tag: regression
+  min_gain: 0.10
+  max_regression_drop: 0.02
+editor:
+  provider: openai_compat          # set model and base_url for your editor, or use provider: scripted
+  model: your-editor-model-name
+  base_url: http://localhost:11434/v1
+  max_turns: 40
+  max_evals: 20
+budget:
+  max_touched_fraction: 0.0005
+  allow: ["model.layers.*.mlp.*", "model.layers.*.self_attn.*"]
+  deny: ["*embed_tokens*", "*lm_head*", "*norm*"]
+output:
+  dir: ./runs

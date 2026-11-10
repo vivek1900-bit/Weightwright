@@ -43,7 +43,7 @@ REQUIRED = ("model", "goal", "eval")
 
 def load_spec(path: str | Path) -> Spec:
     path = Path(path)
-    raw = yaml.safe_load(path.read_text())
+    raw = yaml.safe_load(path.read_text(encoding="utf-8-sig"))
     if not isinstance(raw, dict):
         raise ValueError(f"{path}: spec must be a YAML mapping")
     for k in REQUIRED:

@@ -1,0 +1,24 @@
+{"prompt": "Reply with only yes or no: Is the Amazon a river?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Is a whale a fish? Respond with Yes or No and nothing else.", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Yes or no, nothing else: Is copper a metal?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Reply with only yes or no: Is Rome in Italy?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Is 12 divisible by 3? Respond with Yes or No and nothing else.", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Yes or no, nothing else: Is a bat a bird?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Reply with only yes or no: Is the Sahara a desert?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Is Canada in Europe? Respond with Yes or No and nothing else.", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Yes or no, nothing else: Is a square a rectangle?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Reply with only yes or no: Do plants need sunlight?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Is Saturn a planet? Respond with Yes or No and nothing else.", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Yes or no, nothing else: Is 100 less than 50?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Reply with only yes or no: Is milk a liquid?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Is a dolphin a mammal? Respond with Yes or No and nothing else.", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Yes or no, nothing else: Is Berlin in Germany?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Reply with only yes or no: Is helium heavier than air?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Is a kilometer longer than a meter? Respond with Yes or No and nothing else.", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Yes or no, nothing else: Is chess a sport played with a ball?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Reply with only yes or no: Is the Earth flat?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Is January a winter month in the northern hemisphere? Respond with Yes or No and nothing else.", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Yes or no, nothing else: Is diamond a hard material?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Reply with only yes or no: Is Brazil in South America?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Is a penguin a bird? Respond with Yes or No and nothing else.", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
+{"prompt": "Yes or no, nothing else: Is the Moon bigger than the Earth?", "tag": "target", "check": {"type": "regex", "pattern": "(?i)^\\s*(yes|no)\\.?\\s*$"}}
