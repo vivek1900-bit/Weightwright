@@ -44,18 +44,6 @@ def cmd_inspect(a) -> int:
     return 0
 
 
-def cmd_run(a) -> int:
-    from .runner import run
-    from .spec import load_spec
-    res = run(load_spec(a.spec))
-    print(f"\nstatus: {res.status}\nrun folder: {res.run_dir}")
-    if res.patch_dir:
-        print(f"patch saved: {res.patch_dir}\napply it with: wright apply {res.patch_dir} --model <model dir> --out <new dir>")
-    for r in res.reasons:
-        print(f"reason: {r}")
-    return 0 if res.status == "accepted" else 2
-
-
 def cmd_eval(a) -> int:
     from .evalset import load_evalset, score
     from .runner import make_backend
@@ -86,10 +74,134 @@ def _apply(a, revert: bool) -> int:
     return 0
 
 
+def _print_run_findings(report: "ValidationReport") -> None:
+    # Quoted so cli.py does not need a new runtime import for the annotation.
+    """Print run validation errors and warnings to stderr."""
+    for finding in report.findings:
+        if finding.severity not in {"error", "warn"}:
+            continue
+        print(
+            f"[{finding.severity.upper()}] {finding.code}: {finding.message}",
+            file=sys.stderr,
+        )
+        if finding.hint:
+            print(f"    hint: {finding.hint}", file=sys.stderr)
+
+
+def cmd_validate(a) -> int:
+    from .validate import format_report, report_to_dict, validate_spec_file
+
+    report = validate_spec_file(
+        a.spec,
+        check_backend=not a.no_backend_checks,
+        check_env=not a.no_env_checks,
+    )
+    if a.json:
+        print(json.dumps(report_to_dict(report), indent=2))
+    else:
+        print(format_report(report))
+    if report.errors:
+        return 1
+    if a.strict and report.warnings:
+        return 1
+    return 0
+
+
+def cmd_verify(a) -> int:
+    from .patch import load_patch, verify_patch
+    from .store import SafetensorsStore
+
+    patch = load_patch(a.patch)
+    store = SafetensorsStore(a.model)
+    report = verify_patch(store, patch)
+    if a.expect == "auto":
+        ok = report.state in {"base", "patched"}
+    else:
+        ok = report.state == a.expect
+
+    if a.json:
+        print(
+            json.dumps(
+                {
+                    "state": report.state,
+                    "expected": a.expect,
+                    "ok": ok,
+                    "tensors": [
+                        {
+                            "name": verdict.name,
+                            "status": verdict.status,
+                            "detail": verdict.detail,
+                            "full_check": verdict.full_check,
+                        }
+                        for verdict in report.verdicts
+                    ],
+                },
+                indent=2,
+            )
+        )
+    else:
+        for verdict in report.verdicts:
+            print(f"{verdict.name}  {verdict.status}  {verdict.detail}")
+        print(f"state: {report.state}")
+    return 0 if ok else 2
+
+
+def cmd_run(a) -> int:
+    from .spec import load_spec
+    from .validate import validate_spec
+
+    spec = load_spec(a.spec)
+    if not getattr(a, "skip_validate", False):
+        report = validate_spec(spec)
+        _print_run_findings(report)
+        if report.errors:
+            print(
+                (
+                    "validation failed: "
+                    f"{len(report.errors)} error(s), "
+                    f"{len(report.warnings)} warning(s); model was not loaded"
+                ),
+                file=sys.stderr,
+            )
+            return 1
+
+    from .runner import run
+
+    res = run(spec)
+    print(f"\nstatus: {res.status}\nrun folder: {res.run_dir}")
+    if res.patch_dir:
+        print(
+            f"patch saved: {res.patch_dir}\n"
+            f"apply it with: wright apply {res.patch_dir} "
+            "--model <model dir> --out <new dir>"
+        )
+    for reason in res.reasons:
+        print(f"reason: {reason}")
+    return 0 if res.status == "accepted" else 2
+
+
 def cmd_info(a) -> int:
     meta = load_patch(a.patch).meta
-    print(json.dumps({k: v for k, v in meta.items() if k != "ops"}, indent=2))
+    print(
+        json.dumps(
+            {
+                key: value
+                for key, value in meta.items()
+                if key not in {"ops", "tensor_checks"}
+            },
+            indent=2,
+        )
+    )
     print(f"ops: {len(meta.get('ops', []))}")
+    version = meta.get("patch_version", 1)
+    checks = meta.get("tensor_checks")
+    if version == 2 and isinstance(checks, list):
+        print(f"checksums: yes ({len(checks)} tensors, full SHA-256)")
+    else:
+        print(
+            f"checksums: no (patch_version {version}: "
+            "element-level check only)"
+        )
     return 0
 
 
@@ -110,6 +222,7 @@ def main(argv: list[str] | None = None) -> int:
 
     s = sub.add_parser("run", help="run the full edit loop from a spec file")
     s.add_argument("spec")
+    s.add_argument("--skip-validate", action="store_true", help="skip spec, model and eval validation before running")
     s.set_defaults(fn=cmd_run)
 
     s = sub.add_parser("eval", help="score the model (optionally with a patch) on the spec's eval set")
@@ -129,6 +242,44 @@ def main(argv: list[str] | None = None) -> int:
     s = sub.add_parser("info", help="show a patch's metadata")
     s.add_argument("patch")
     s.set_defaults(fn=cmd_info)
+
+    s = sub.add_parser(
+        "validate",
+        help="check a spec, model folder and eval set without loading weights",
+    )
+    s.add_argument("spec")
+    s.add_argument("--json", action="store_true", help="print the report as JSON")
+    s.add_argument(
+        "--strict",
+        action="store_true",
+        help="exit 1 when warnings are present",
+    )
+    s.add_argument(
+        "--no-backend-checks",
+        action="store_true",
+        help="skip transformers, model metadata and CUDA checks",
+    )
+    s.add_argument(
+        "--no-env-checks",
+        action="store_true",
+        help="skip editor API key environment checks",
+    )
+    s.set_defaults(fn=cmd_validate)
+
+    s = sub.add_parser(
+        "verify",
+        help="verify a patch against a model without writing",
+    )
+    s.add_argument("patch")
+    s.add_argument("--model", required=True, help="model folder to verify against")
+    s.add_argument(
+        "--expect",
+        choices=("base", "patched", "auto"),
+        default="auto",
+        help="required patch state (default: auto accepts base or patched)",
+    )
+    s.add_argument("--json", action="store_true", help="print the report as JSON")
+    s.set_defaults(fn=cmd_verify)
 
     args = p.parse_args(argv)
     try:

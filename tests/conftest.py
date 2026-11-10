@@ -74,7 +74,7 @@ def make_spec(tmp_path, model_dir):
             "editor": {"provider": provider, "max_turns": 12, "max_evals": 5},
             "budget": {"max_touched_fraction": 0.5, "deny": ["*embed_tokens*"]},
             "output": {"dir": str(tmp_path / "runs")},
-            "scripted_ops": scripted_ops or [],
+            "scripted_ops": scripted_ops or ([{"op": "scale", "tensor": W, "factor": 0.3, "index": "[0, 0]"}] if provider == "scripted" else []),
         }
         for k, v in over.items():
             raw[k].update(v) if isinstance(raw.get(k), dict) else raw.__setitem__(k, v)
